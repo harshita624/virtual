@@ -9,10 +9,25 @@ import cors from "cors"
 import userRouter from "./routes/user.routes.js"
 import geminiResponse from "./gemini.js"
 const app=express()
-app.use(cors({ 
-    origin: ["http://localhost:5173", "https://virtualfrontend.onrender.com"],
-    credentials: true
-}))
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://virtualfrontend.onrender.com",
+];
+
+// CORS configuration
+app.use(
+  cors({ 
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like from tools) or from allowed ones
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 
 const port=process.env.PORT||5000
 app.use(express.json())
