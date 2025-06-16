@@ -10,9 +10,7 @@ import { userDataContext } from './context/UserContext';
 const App = () => {
   const context = useContext(userDataContext);
 
-  if (!context) {
-    return <div>Loading...</div>; // or handle gracefully
-  }
+  if (!context) return <div>Loading...</div>;
 
   const { userData } = context;
 
@@ -20,17 +18,11 @@ const App = () => {
     <Routes>
       <Route
         path="/"
-        element={
-          userData?.assistantImage && userData?.assistantName ? (
-            <Home />
-          ) : (
-            <Navigate to="/customize" replace />
-          )
-        }
+        element={userData ? <Home /> : <Navigate to="/signup" replace />}
       />
       <Route
         path="/signup"
-        element={!userData ? <SignUp /> : <Navigate to="/customize" replace />}
+        element={!userData ? <SignUp /> : <Navigate to="/" replace />}
       />
       <Route
         path="/signin"
