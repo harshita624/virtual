@@ -18,35 +18,33 @@ const Customize2 = () => {
   const navigate = useNavigate();
 
   const handleUpdateAssistant = async () => {
-    setLoading(true);
-    try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append('assistantName', assistantName);
+  setLoading(true);
+  try {
+    const formData = new FormData();
+    formData.append('assistantName', assistantName.trim());
 
-      if (backendImage) {
-        formData.append('assistantImage', backendImage);
-      } else {
-        formData.append('imageUrl', selectedImage);
-      }
-
-      const result = await axios.post(
-        `${serverUrl}/api/user/update`,
-        formData,
-        { withCredentials: true }
-      );
-
-      setLoading(false);
-      console.log(result.data);
-      setUserData(result.data);
-      navigate('/');
-    } catch (error) {
-      setLoading(false);
-      console.error(error.response?.data || error.message);
-    } finally {
-      setLoading(false);
+    if (backendImage) {
+      formData.append('assistantImage', backendImage);
+    } else if (selectedImage) {
+      formData.append('imageUrl', selectedImage);
     }
-  };
+
+    const result = await axios.post(
+      `${serverUrl}/api/user/update`,
+      formData,
+      { withCredentials: true }
+    );
+
+    setUserData(result.data);
+    console.log(result.data);
+    navigate('/'); // <- This should work to redirect
+  } catch (error) {
+    console.error(error.response?.data || error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div
