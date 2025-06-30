@@ -10,7 +10,7 @@ import userRouter from "./routes/user.routes.js"
 import geminiResponse from "./gemini.js"
 const app=express()
 app.use(cors({ 
-    origin: "https://virtualfrontend.onrender.com",
+    origin: "https://virtual-1kw1.vercel.app/",
     credentials: true
 }))
 const port=process.env.PORT||5000
