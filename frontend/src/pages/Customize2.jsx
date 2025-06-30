@@ -19,36 +19,34 @@ const Customize2 = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleUpdateAssistant = async () => {
-    setLoading(true);
-    try {
-      setLoading(true);
-      const formData = new FormData();
-      formData.append('assistantName', assistantName);
-
+const handleUpdateAssistant = async () => {
+  setLoading(true);
+  try {
+    const formData = new FormData();
+    formData.append('assistantName', assistantName);
     if (backendImage) {
       formData.append('assistantImage', backendImage);
-    } else if (selectedImage) {
+    } else {
       formData.append('imageUrl', selectedImage);
     }
 
-    const result = await axios.post(
-      `${serverUrl}/api/user/update`,
-      formData,
-      { withCredentials: true }
-    );
+    // Await the result
+    const result = await axios.post(`${serverUrl}/api/user/update`, formData, {
+      withCredentials: true
+    });
 
-      setLoading(false);
-      console.log(result.data);
-      setUserData(result.data);
-      navigate('/');
-    } catch (error) {
-      setLoading(false);
-      console.error(error.response?.data || error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    // Update context first
+    setUserData(result.data);
+
+    // THEN navigate
+    navigate('/', { replace: true });
+  } catch (error) {
+    console.error(error.response?.data || error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div
