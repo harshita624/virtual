@@ -9,9 +9,9 @@ import cors from "cors"
 import userRouter from "./routes/user.routes.js"
 import geminiResponse from "./gemini.js"
 const app=express()
-app.use(cors({
-    origin:"http://localhost:5173",
-    credentials:true
+app.use(cors({ 
+    origin: "https://virtual-1kw1.vercel.app",
+    credentials: true
 }))
 const port=process.env.PORT||5000
 app.use(express.json())

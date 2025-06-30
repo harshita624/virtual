@@ -1,7 +1,7 @@
 // Customize2.jsx
 
 import React, { useContext, useState } from 'react';
-import { userDataContext } from '../context/userContext';
+import { userDataContext } from '../context/UserContext';
 import axios from 'axios';
 import { IoArrowBack } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
@@ -22,24 +22,28 @@ const Customize2 = () => {
   const handleUpdateAssistant = async () => {
     setLoading(true);
     try {
+      setLoading(true);
       const formData = new FormData();
       formData.append('assistantName', assistantName);
 
-      if (backendImage) {
-        formData.append('assistantImage', backendImage);
-      } else {
-        formData.append('imageUrl', selectedImage);
-      }
+    if (backendImage) {
+      formData.append('assistantImage', backendImage);
+    } else if (selectedImage) {
+      formData.append('imageUrl', selectedImage);
+    }
 
-      const result = await axios.post(
-        `${serverUrl}/api/user/update`,
-        formData,
-        { withCredentials: true }
-      );
+    const result = await axios.post(
+      `${serverUrl}/api/user/update`,
+      formData,
+      { withCredentials: true }
+    );
 
+      setLoading(false);
+      console.log(result.data);
       setUserData(result.data);
       navigate('/');
     } catch (error) {
+      setLoading(false);
       console.error(error.response?.data || error.message);
     } finally {
       setLoading(false);

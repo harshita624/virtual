@@ -12,7 +12,7 @@ import Card from "../components/Card";
 import { LuImagePlus } from "react-icons/lu";
 import { IoArrowBack } from "react-icons/io5";
 
-import { userDataContext } from "../context/userContext";
+import { userDataContext } from "../context/UserContext";
 
 import { useNavigate } from "react-router-dom";
 

@@ -4,7 +4,7 @@ import axios from "axios";
 export const userDataContext = createContext();
 
 const UserDataProvider = ({ children }) => {
-  const serverUrl = "http://localhost:8000";
+  const serverUrl = "https://virtual-backend-rt6p.onrender.com";
   
   const [userData, setUserData] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
